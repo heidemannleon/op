@@ -1,14 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- MaterializeCSS CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>oop</title>
+    <title>OOP</title>
 </head>
 <body>
-    OOP kursese põhi
-    <div style="margin-top: 1000px;"></div>
-    <script src="app.js"></script>
+ 
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <!-- card-content algus-->
+                    <div class="card-content">                   
+                        <span class="card-titile">Ülesanded </span>
+                        <form>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label for="task">Uus ülesanne</label>
+                                    <input type="text" id="task" value="Õpi OOP JavaScripti">
+                                </div>
+                            </div>    
+                            <input type="submit" value="Lisa Ülesanne" class="btn"> 
+                        </form>
+                    </div>
+                    <!-- card-content lõpp-->
+                    <!-- card-action algus-->
+                    <div class="card-action">
+                        <h5>Lisatud ülesanded</h5>
+                        <ul class="collection">
+                            <!-- ülesanne 1-->
+                            <li class="collection-item">
+                                Õpi OOP Javascript
+                                <a href="#" class="delete-item secondary-content">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </li>
+
+                            <!-- ülesanne 2-->
+                            <li class="collection-item">
+                                Õpi OOP Javascript
+                                <a href="#" class="delete-item secondary-content">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </li>
+
+                            <!-- ülesanne 3-->
+                            <li class="collection-item">
+                                Õpi OOP Javascript
+                                <a href="#" class="delete-item secondary-content">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="btn black">kustuta kõik ülesanded</a>
+                    </div>
+                    <!-- card-action lõpp-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+   
+   
+ 
+ 
+ 
+ 
+    <!-- MaterializeCSS JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- Local script -->
+<script src="app.js"></script>
+
+    
 </body>
 </html>
