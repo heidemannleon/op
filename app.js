@@ -1,43 +1,25 @@
+20 lines (16 sloc)  577 Bytes
+  
 // document meetodid
-// elementide loomine
+// elementide asendamine
 
+// leia vana element h5
+const vanaPealkiri = document.querySelector('h5');
+// leia kaart, kus antud pealkiri on
+const divCardAction = document.querySelector('.card-action');
 
-// Loo li element
-const liElement = document.createElement('li');
-// lisa klass
-liElement.className = 'collection-item'
+// loo uus pealkiri
+const uusPealkiri = document.createElement('h3');
 // lisa id
-liElement.id = 'new-item';
-// lisa atribuut
-liElement.setAttribute('title', 'Uus element');
-// lisa teksti väljund
-// liElement.innerHTML = 'Uus element';
-liElement.textContent = 'Uus element'
+uusPealkiri.id = 'new-title';
+// lisa sisu
+// uusPealkiri.appendChild(document.createTextNode('Uued ülesanded'));
+uusPealkiri.textContent = 'Uued ülesanded';
 
+// asenda vana pealkiri uuega
+divCardAction.replaceChild(uusPealkiri, vanaPealkiri);
 
-
-// loome lingi element 
-const link = document.createElement('a');
-//  anna klassid
-link.className = 'delete-item secondary-content';
-// kustutamis ikoon (textContent ei tööta)
-link.innerHTML = '<i class="fa fa-remove"></i>';
-
-// MIDA SEE TEEB
-liElement.appendChild(link);
-
-// leiame ul element DOM-ist
-ulElement = document.querySelector('ul.collection');
-
-// lisa liElement ul elemendile
-ulElement.appendChild(liElement)
-
-
-console.log(ulElement);
-
-
-
-
+console.log(divCardAction);
 
 
 // MIS ON DOM
