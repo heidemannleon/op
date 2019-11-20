@@ -1,27 +1,8 @@
 // sündmused
 
 const kustutaKoik = document.querySelector('.clear-tasks');
-kustutaKoik.addEventListener('click', vajutaNupp);
-
-function vajutaNupp(e){
-  let sisu = e;
-  // target
-  sisu = e.target;
-  sisu = e.target.id;
-  sisu = e.target.className;
-  sisu = e.target.classList;
-
-  // tüüp
-  sisu = e.type;
-
-  // sündmuse kordinaadid browseri akna suhtes
-  sisu = e.clientY;
-  sisu = e.clientX;
-
-  // sündmuse kordinaadid elemendi enda suhtes
-  sisu = e.offsetY;
-  sisu = e.offsetX;
-  console.log(sisu);
+const form = document.querySelector('form');
+const lisaUusYlesanne = document.getElementById('task');
 const text = document.querySelector('h5');
 const kaart = document.querySelector('.card');
 // click
@@ -42,6 +23,13 @@ const kaart = document.querySelector('.card');
 // kaart.addEventListener('mouseout', syndmus);
 // mouse move
 kaart.addEventListener('mousemove', syndmus);
+
+// kustutame lisUusYlesanne väärtus
+lisaUusYlesanne.value = '';
+
+// vormi saatmine
+form.addEventListener('submit', syndmus);
+
 function syndmus(e){
   // logi sündmuse tüüp
   console.log(`Sündmuse tüüp: ${e.type}`);
@@ -49,4 +37,8 @@ function syndmus(e){
   text.textContent =  `HiirX: ${e.offsetX} HiirY: ${e.offsetY}`;
   // koosta body värv rgb(Xkoord, Ykoord, 40);
   document.body.style.backgroundColor = `rgb(${e.offsetX}, ${e.offsetY}, 40)`;
+  // kontrollime vormi kaudu saadetud väärtus
+  console.log(lisaUusYlesanne.value);
+  // väljastame ülesanne HTML-is
+  text.innerText = lisaUusYlesanne.value;
 } 
