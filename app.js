@@ -1,62 +1,96 @@
-// sündmused
-
-const form = document.querySelector('form');
-const lisaUusYlesanne = document.getElementById('task');
-const text = document.querySelector('h5');
-
-// kustutame lisUusYlesanne väärtus
-lisaUusYlesanne.value = '';
-
-// klaviatuur
-// keydown
-// lisaUusYlesanne.addEventListener('keydown', syndmus);
-// keyup
-// lisaUusYlesanne.addEventListener('keyup', syndmus);
-// keypress
-// lisaUusYlesanne.addEventListener('keypress', syndmus);
-// focus
-// lisaUusYlesanne.addEventListener('focus', syndmus);
-// blur
-// lisaUusYlesanne.addEventListener('blur', syndmus);
-// paste
-// lisaUusYlesanne.addEventListener('paste', syndmus);
-// cut
-// lisaUusYlesanne.addEventListener('cut', syndmus);
-// input
-// lisaUusYlesanne.addEventListener('input', syndmus);
 
 
-function syndmus(e){
-  // logi sündmuse tüüp
-  console.log(`Sündmuse tüüp: ${e.type}`);
-  // kontrollime vormi kaudu saadetud väärtus
-  console.log(lisaUusYlesanne.value);
-  // väljastame ülesanne HTML-is
-  text.innerText = lisaUusYlesanne.value;
-} 
-// bubbling
+/*
+document.querySelector('form').addEventListener('submit', salvesta);
 
-// lehe kaardi pealkiri
-// document.querySelector('.card-title').addEventListener('click', function(e){
-//   console.log('card-title');
-// });
+function salvesta(e){
+    const uusYlesanne = document.getElementById('task').value;
+    let Ylesanded;
+    if(localStorage.getItem('tasks') === null){
+        ylesanded = [];
+        console.log('')
+    } else{
+    
+        console.log('olemas, tuleb lugeda')
+        ylesanded = JSON.parse(localStorage)
+        console.log(Ylesanded);
+    }
+    ylesanded.push(uusYlesanne)
+    */
 
-// lehe kaardi sisu
-document.querySelector('.card-content').addEventListener('click', function(e){
-  console.log('card-content');
-});
+    /*Minu versioon
+   let eesNimi = ['Leon'];
+   let pereNimi = ['Heidemann'];
+   let synniAasta = [1997];
+   let praeguneAasta = [2019];
+   var vanus = praeguneAasta - synniAasta;
 
-// delegeerimine
+   console.log(eesNimi+' '+pereNimi+' '+vanus);
+ 
+   alert('Nimi: '+eesNimi+' '+pereNimi+' Vanus: '+vanus);
+   */
 
-const kustutaYlesanne = document.querySelector('.delete-item');
-kustutaYlesanne.addEventListener('click', kustuta);
 
-// console.log(kustutaYlesanne);
 
-function kustuta(e){
-   if(e.target.parentElement.classList.contains('delete-item')){
-    console.log('hakkame kustutama');
-    e.target.parentElement.parentElement.remove();
-  } 
-}
 
+
+
+
+
+
+/* 
+   let eesnimi, perenimi;
+   let synnikuupaev;
+
+   function taisNimi(eesNimi, pereNimi){
+       return `${eesnimi}` `${perenimi}`;
+   }
+   functionarvutaVanus(synnikuupaev){
+       synnikuupaev = new Date(synnikuupaev);
+       vaheSekundites = Date.now() - synnikuupaev.getTime();
+        vanusDate = bew Date(vaheSekundites);
+        aastaDate = vanusDate,getUTCFullYear();
+        vanus = aastaDate-1970;
+        return `Vanus: ${vanus} aasta`;
+    };
+
+    console.log(taisNimi("Minu", "laps"))
+    console.log(arvutaVanus("2014-08-01"))
+    */
+
+
+
+
+
+
+
+
+
+
+// skp on sünnikuupäev
+// inimese kirjeldus OOP abil
+// inimese konstruktor
+function Isik(e, p, skp){
+    this.eesnimi = e;
+    this.perenimi = p;
+    this.synnikuupaev = new Date(skp);
+  
+    // väljasta täisnimi
+    this.taisNimi = function(){
+      return `${this.eesnimi} ${this.perenimi}`;
+    }
+  
+    // arvuta vanus
+    this.arvutaVanus = function(){
+      const vaheSekundites = Date.now() - this.synnikuupaev.getTime();
+      const vanusDateKujul = new Date(vaheSekundites);
+      const taisAasta = vanusDateKujul.getUTCFullYear();
+      const vanus = taisAasta - 1970;
+      return vanus;
+    }
+  }
+  
+  const anna = new Isik('Anna', 'Karutina', '11-27-1980');
+  const kadi = new Isik('Kadi', 'Tamm', '07-30-1995');
+  console.log(anna.taisNimi());
+  console.log(kadi.taisNimi());
