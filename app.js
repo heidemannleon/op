@@ -28,8 +28,13 @@ KL.prototype.lisaRaamatTabelisse = function(r){
     <td>${r.pealkiri}</td>
     <td>${r.autor}</td>
     <td>${r.isbn}</td>
-    <td><a href="#" class="delete">X</a></td>
+    <td> <a href="#" class="kustuta" style="text-decoration: none;"> &#x274C;  </i> </a> </td>
+    
   `;
+ // <td> <a href="#" class="kustuta"> X </a> </td>
+
+
+
   // lisame rida tabelisse
   tabel = document.getElementById('book-list');
   tabel.appendChild(rida);
@@ -38,11 +43,13 @@ KL.prototype.lisaRaamatTabelisse = function(r){
 
 // Raamatu kustutamine tabelist
 KL.prototype.kustutaRaamatTabelist = function(kustutaElement){
-    tabeliRida = 
+  if(kustutaElement.className === 'kustuta'){  
+  tabeliRida = 
     kustutaElement.parentElement.parentElement;
     tabeliRida.remove();
+    return true;  
+  }
 }
-
 // teade väljastamine
 KL.prototype.teade = function(s, stiil){
     // loome div, kuhu lisada teade sõnum
@@ -59,7 +66,7 @@ KL.prototype.teade = function(s, stiil){
     // kustutame teate 5 sekundi määdumisel
     setTimeout(function(){
       document.querySelector('.alert').remove();
-     }, 5000);  
+     }, 2000);  
   }
   
   // kirjeldame raamatu lisamise sündmust
@@ -108,5 +115,6 @@ function kustutaRaamat(e){
   kl.kustutaRaamatTabelist(e.target)
 
   // väljastame vastava teate
-  kl.teade('Raamat on kustutatud', 'valid');
+  if(onKustutatud){
+    kl.teade('Raamat on kustutatud', 'valid');}
 }
