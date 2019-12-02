@@ -1,0 +1,14 @@
+.alert {
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+.valid {
+    background: rgb(4, 197, 4);
+}
+
+.invalid {
+    background: red;
+}
