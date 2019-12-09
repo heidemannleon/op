@@ -21,6 +21,7 @@ KL.prototype.puhastaSisend = function(){
 
 // raamatu lisamine tabelisse
 KL.prototype.lisaRaamatTabelisse = function(r){
+  console.log(r);
   // loome tabeli rida
   const rida = document.createElement('tr');
   // täidame rida tabeli andmetega
@@ -28,48 +29,109 @@ KL.prototype.lisaRaamatTabelisse = function(r){
     <td>${r.pealkiri}</td>
     <td>${r.autor}</td>
     <td>${r.isbn}</td>
-    <td> <a href="#" class="kustuta" style="text-decoration: none;"> &#x274C;  </i> </a> </td>
-    
+    <td><a href="#" class="kustuta">X</a></td>
   `;
- // <td> <a href="#" class="kustuta"> X </a> </td>
-
-
-
   // lisame rida tabelisse
   tabel = document.getElementById('book-list');
   tabel.appendChild(rida);
 }
 
-
-// Raamatu kustutamine tabelist
+// raamatu kustutamine tabelist
 KL.prototype.kustutaRaamatTabelist = function(kustutaElement){
-  if(kustutaElement.className === 'kustuta'){  
-  tabeliRida = 
-    kustutaElement.parentElement.parentElement;
+  if(kustutaElement.className === 'kustuta'){
+    tabeliRida = kustutaElement.parentElement.parentElement;
     tabeliRida.remove();
-    return true;  
+    return true;
   }
 }
+
 // teade väljastamine
 KL.prototype.teade = function(s, stiil){
-    // loome div, kuhu lisada teade sõnum
-    const div = document.createElement('div');
-    div.className = `alert ${stiil}`;
-    // lisame sõnumi tekst divi sisse
-    const tekst = document.createTextNode(s);
-    div.appendChild(tekst);
-    // leiame elemendid, mille suhtes tuleb lisada uus element
-    const konteiner = document.querySelector('.container');
-    const vorm = document.getElementById('book-form');
-    // lisame teade dokumendi
-    konteiner.insertBefore(div, vorm);
-    // kustutame teate 5 sekundi määdumisel
-    setTimeout(function(){
-      document.querySelector('.alert').remove();
-     }, 2000);  
+  // loome div, kuhu lisada teade sõnum
+  const div = document.createElement('div');
+  div.className = `alert ${stiil}`;
+  // lisame sõnumi tekst divi sisse
+  const tekst = document.createTextNode(s);
+  div.appendChild(tekst);
+  // leiame elemendid, mille suhtes tuleb lisada uus element
+  const konteiner = document.querySelector('.container');
+  const vorm = document.getElementById('book-form');
+  // lisame teade dokumendi
+  konteiner.insertBefore(div, vorm);
+
+  // kustutame teade 5 sekundi möödumisel
+  setTimeout(function(){ 
+    document.querySelector('.alert').remove();
+   }, 5000);
+}
+
+// raamatute lugemine LS-st
+KL.prototype.loeRaamatud = function(){
+  // loome raamatute hoidla LS-s
+  let raamatud;
+  // kui raamatud veel LS-s ei eksisteeri
+  if(localStorage.getItem('raamatud') === null){
+    raamatud = [];
+  } else {
+    // kui aga raamatud juba olemas, saame need kätte
+    raamatud = JSON.parse(localStorage.getItem('raamatud'));
   }
-  
-  // kirjeldame raamatu lisamise sündmust
+  return raamatud;
+}
+
+// raamatu salvestamine LS-sse
+KL.prototype.salvestaRaamat = function(r){
+  // tekitame raamatute massiiv
+  const raamatud = this.loeRaamatud();
+  // lükame uue raamatud andmed massiivi
+  raamatud.push(r);
+  // lisame andmed LS-sse
+  localStorage.setItem('raamatud', JSON.stringify(raamatud));
+}
+
+// salvestatud raamatute näitamine
+KL.prototype.naitaRaamatud = function(){
+  // vaatame, millised raamatud on olemas
+  const raamatud = this.loeRaamatud();
+  raamatud.forEach(function(raamat){
+    // loeme andmed LS-st ühekaupa
+    // ja teisendame Raamat objektiks
+    const r = new Raamat(raamat['autor'], raamat['pealkiri'], raamat['isbn']);
+    // Loome kl objekt väljastamiseks
+    const kl = new KL();
+    // väljastame tabeli rida
+    kl.lisaRaamatTabelisse(r);
+  });
+}
+
+KL.prototype.kustutaRaamatLS = function(isbn){
+  // vaatame, millised raamatud on olemas
+  const raamatud = this.loeRaamatud();
+  raamatud.forEach(function(raamat, index){
+    // loeme andmed LS-st ühekaupa
+    // ja võrdleme
+    if(raamat.isbn === isbn){
+      raamatud.splice(index, 1); // kustutame valitud element
+    }
+  });
+  // lisame andmed LS-sse
+  localStorage.setItem('raamatud', JSON.stringify(raamatud));
+  // kinnitame kustutamist teade väljastamiseks
+  return true;
+}
+
+// kirjeldame andmete lugemise sündmust LS-st
+document.addEventListener('DOMContentLoaded', raamatuteTabel);
+
+// raamatute tabeli funktsioon
+function raamatuteTabel(e){
+  // loome kasutaja liidese objekt temaga opereerimiseks
+  const kl = new KL();
+  // kutsume raamatute näitamist funktsiooni
+  kl.naitaRaamatud();
+}
+
+// kirjeldame raamatu lisamise sündmust
 document.getElementById('book-form').addEventListener('submit', lisaRaamat);
 // raamatu lisamise funktsioon
 function lisaRaamat(e){
@@ -90,7 +152,10 @@ function lisaRaamat(e){
   } else {
     // muidu
     // lisame sisestatud raamat tabelisse
+    console.log(raamat);
     kl.lisaRaamatTabelisse(raamat);
+    // salvestame raamatu andmed LS-sse
+    kl.salvestaRaamat(raamat);
     kl.teade('Raamat on lisatud!', 'valid');
   }
 
@@ -101,10 +166,7 @@ function lisaRaamat(e){
 }
 
 // raamatu kustutamise sündmus
-document.getElementById('book-list')
-.addEventListener('click', kustutaRaamat);
-
-
+document.getElementById('book-list').addEventListener('click', kustutaRaamat);
 
 function kustutaRaamat(e){
   // loome kasutaja liidese objekt temaga opereerimiseks
@@ -112,9 +174,20 @@ function kustutaRaamat(e){
 
   // kutsume tabelis oleva raamatu kustutamise
   // funktsioon
-  kl.kustutaRaamatTabelist(e.target)
-
-  // väljastame vastava teate
+  // loome X link, millel clickime kustutamiseks
+  const X = e.target;
+  // saame kustutava raamatu isbn kätte
+  isbn = X.parentElement.previousElementSibling.textContent;
+  // kustutame andmed tabeli väljundist
+  kl.kustutaRaamatTabelist(X);
+  // kustutame andmed LS-st
+  onKustutatud = kl.kustutaRaamatLS(isbn);
+  
+  // väljastame vastav teade
   if(onKustutatud){
-    kl.teade('Raamat on kustutatud', 'valid');}
+   kl.teade('Raamat on kustutatud', 'valid');
+  }
+  
+  e.preventDefault();
 }
+//  <td> <a href="#" class="kustuta" style="text-decoration: none;"> &#x274C;  </i> </a> </td>
